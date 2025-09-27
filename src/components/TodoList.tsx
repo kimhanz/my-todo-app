@@ -1,0 +1,45 @@
+import { useTodos } from "../hooks/useTodos.ts"
+import { Loader } from "./Loader.tsx"
+import { TodoItem } from "./TodoItem.tsx"
+
+export const TodoList: React.FC = () => {
+  const { todos, loading, error, fetchTodos } = useTodos()
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Todos</h2>
+        <div className="flex items-center gap-2">
+          <button className="btn-ghost" onClick={fetchTodos}>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="p-4 bg-white rounded shadow-sm">
+          <Loader />
+        </div>
+      )}
+
+      {error && (
+        <div className="p-4 bg-red-50 text-red-700 rounded border border-red-100">
+          <div className="font-medium">Error</div>
+          <div className="text-sm">{error}</div>
+        </div>
+      )}
+
+      {!loading && !error && todos.length === 0 && (
+        <div className="p-4 bg-white rounded shadow-sm text-slate-500">
+          No todos yet. Add your first todo!
+        </div>
+      )}
+
+      <ul className="space-y-2">
+        {todos.map((t) => (
+          <TodoItem key={t.id} todo={t} />
+        ))}
+      </ul>
+    </div>
+  )
+}

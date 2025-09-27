@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Todo } from "../types/todos.ts"
+import { type Todo } from "../types/todos.ts"
 
 const api = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",

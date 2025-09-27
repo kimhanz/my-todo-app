@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useTodos } from "../hooks/useTodo.ts"
+import { useTodos } from "../hooks/useTodos.ts"
 import { type Todo } from "../types/todos.ts"
 import { TodoForm } from "./TodoForm.tsx"
 type Props = {

@@ -75,17 +75,24 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
           </button>
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">You want to Delete todo?</p>
+              <h3 className="font-bold text-lg text-red-600">Delete Todo</h3>
+              <p className="py-4">
+                Are you sure you want to delete this todo? <br />
+                <span className="text-sm text-gray-500">
+                  This action cannot be undone.
+                </span>
+              </p>
               <div className="modal-action">
-                <form method="dialog" className="flex gap-x-1">
+                <form method="dialog" className="flex gap-x-2">
                   <button
                     onClick={() => deleteTodo(todo.id)}
-                    className=" btn bg-red-500 text-white hover:bg-red-600"
+                    className="btn bg-red-600 text-white hover:bg-red-700"
                   >
-                    Delete
+                    Yes, Delete
                   </button>
-                  <button className="btn">Cancel</button>
+                  <button className="btn btn-ghost border border-gray-300">
+                    Cancel
+                  </button>
                 </form>
               </div>
             </div>

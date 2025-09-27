@@ -26,11 +26,15 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchTodos = async () => {
     setLoading(true)
     setError(null)
+    const t = toast.loading("Loading todos...")
     try {
       const data = await api.fetchTodosAPI()
       setTodos(data)
+      toast.success("Todos loaded", { id: t })
     } catch (err: any) {
-      setError(err?.message ?? "Unknown error")
+      const msg = err?.message ?? "Unknown error"
+      setError(msg)
+      toast.error(msg, { id: t })
     } finally {
       setLoading(false)
     }
@@ -43,6 +47,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const addTodo = async (title: string) => {
     setLoading(true)
     setError(null)
+    const t = toast.loading("Creating todo...")
     try {
       const newTodoPayload = { title, completed: false }
       const created = await api.createTodoAPI(newTodoPayload)
@@ -54,9 +59,11 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
         completed: !!created.completed,
       }
       setTodos((prev) => [createdLocal, ...prev])
-      toast.success("Create Successfully!")
+      toast.success("Todo created", { id: t })
     } catch (err: any) {
-      setError(err?.message ?? "Failed to create todo")
+      const msg = err?.message ?? "Failed to create todo"
+      setError(msg)
+      toast.error(msg, { id: t })
     } finally {
       setLoading(false)
     }
@@ -65,14 +72,17 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateTodo = async (id: number, updates: Partial<Todo>) => {
     setLoading(true)
     setError(null)
+    const t = toast.loading("Updating todo...")
     try {
       const updated = await api.updateTodoAPI(id, updates)
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? { ...t, ...updated } : t))
       )
-      toast.success("Updated Successfully!")
+      toast.success("Todo updated", { id: t })
     } catch (err: any) {
-      setError(err?.message ?? "Failed to update todo")
+      const msg = err?.message ?? "Failed to update todo"
+      setError(msg)
+      toast.error(msg, { id: t })
     } finally {
       setLoading(false)
     }
@@ -81,12 +91,15 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const deleteTodo = async (id: number) => {
     setLoading(true)
     setError(null)
+    const t = toast.loading("Deleting todo...")
     try {
       await api.deleteTodoAPI(id)
       setTodos((prev) => prev.filter((t) => t.id !== id))
-      toast.success("Deleted Successfully!")
+      toast.success("Todo deleted", { id: t })
     } catch (err: any) {
-      setError(err?.message ?? "Failed to delete todo")
+      const msg = err?.message ?? "Failed to delete todo"
+      setError(msg)
+      toast.error(msg, { id: t })
     } finally {
       setLoading(false)
     }
@@ -100,11 +113,18 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
     setTodos((prev) =>
       prev.map((t) => (t.id === id ? { ...t, completed: newCompleted } : t))
     )
+
+    const t = toast.loading(
+      newCompleted ? "Marking as done..." : "Marking as undone..."
+    )
     try {
       await api.updateTodoAPI(id, { ...target, completed: newCompleted })
+      toast.success("Status updated", { id: t })
     } catch (err: any) {
       setTodos((prev) => prev.map((t) => (t.id === id ? target : t)))
-      setError(err?.message ?? "Failed to toggle todo")
+      const msg = err?.message ?? "Failed to toggle todo"
+      setError(msg)
+      toast.error(msg, { id: t })
     }
   }
 

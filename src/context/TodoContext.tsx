@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react"
-import { Todo } from "../types/todos.ts"
+import { type Todo } from "../types/todos.ts"
 import * as api from "../services/api.ts"
 
 type TodoContextType = {

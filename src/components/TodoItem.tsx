@@ -65,7 +65,12 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
           </button>
           <button
             className="btn-ghost"
-            onClick={() => document?.getElementById("my_modal_1")?.showModal()}
+            onClick={() => {
+              const modal = document.getElementById(
+                "my_modal_1"
+              ) as HTMLDialogElement | null
+              modal?.showModal()
+            }}
             aria-label="Delete"
           >
             <FaRegTrashAlt

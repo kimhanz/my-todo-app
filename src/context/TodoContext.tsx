@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react"
 import { type Todo } from "../types/todos.ts"
 import * as api from "../services/api.ts"
+import toast from "react-hot-toast"
 
 type TodoContextType = {
   todos: Todo[]
@@ -26,7 +27,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoading(true)
     setError(null)
     try {
-      const data = await api.fetchTodosAPI(15)
+      const data = await api.fetchTodosAPI()
       setTodos(data)
     } catch (err: any) {
       setError(err?.message ?? "Unknown error")
@@ -53,6 +54,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
         completed: !!created.completed,
       }
       setTodos((prev) => [createdLocal, ...prev])
+      toast.success("Create Successfully!")
     } catch (err: any) {
       setError(err?.message ?? "Failed to create todo")
     } finally {
@@ -68,6 +70,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? { ...t, ...updated } : t))
       )
+      toast.success("Updated Successfully!")
     } catch (err: any) {
       setError(err?.message ?? "Failed to update todo")
     } finally {
@@ -81,6 +84,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       await api.deleteTodoAPI(id)
       setTodos((prev) => prev.filter((t) => t.id !== id))
+      toast.success("Deleted Successfully!")
     } catch (err: any) {
       setError(err?.message ?? "Failed to delete todo")
     } finally {

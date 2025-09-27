@@ -38,15 +38,19 @@ export const TodoForm: React.FC<Props> = ({
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="input flex-1"
+        className="input input-primary flex-1 text-lg"
         placeholder="Write a todo..."
         aria-label="Todo title"
       />
-      <button type="submit" disabled={submitting} className="btn">
+      <button
+        type="submit"
+        disabled={submitting}
+        className="btn btn-primary w-[80px] text-white"
+      >
         {submitting ? "Saving..." : submitLabel}
       </button>
       {onCancel && (
-        <button type="button" onClick={onCancel} className="btn-ghost ml-1">
+        <button type="button" onClick={onCancel} className="btn ml-1">
           Cancel
         </button>
       )}

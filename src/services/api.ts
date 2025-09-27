@@ -2,14 +2,14 @@ import axios from "axios"
 import { type Todo } from "../types/todos.ts"
 
 const api = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "https://68d787692144ea3f6da5960a.mockapi.io",
   headers: {
     "Content-Type": "application/json",
   },
 })
 
-export async function fetchTodosAPI(limit = 10): Promise<Todo[]> {
-  const res = await api.get<Todo[]>(`/todos?_limit=${limit}`)
+export async function fetchTodosAPI(): Promise<Todo[]> {
+  const res = await api.get<Todo[]>(`/todos`)
   return res.data
 }
 

@@ -24,26 +24,24 @@ export const TodoList: React.FC = () => {
         <div className="p-4 bg-white shadow-sm card flex justify-center">
           <Loader />
         </div>
+      ) : error ? (
+        <div className="p-4 bg-red-50 text-red-700 card border border-red-100">
+          <div className="font-medium">Error</div>
+          <div className="text-sm">{error}</div>
+        </div>
       ) : (
         <>
-          {error && (
-            <div className="p-4 bg-red-50 text-red-700 card border border-red-100">
-              <div className="font-medium">Error</div>
-              <div className="text-sm">{error}</div>
-            </div>
-          )}
-
-          {!error && todos.length === 0 && (
+          {todos.length === 0 ? (
             <div className="p-4 bg-white card shadow-sm text-slate-500">
               No todos yet. Add your first todo!
             </div>
+          ) : (
+            <ul className="space-y-3">
+              {todos.map((t) => (
+                <TodoItem key={t.id} todo={t} />
+              ))}
+            </ul>
           )}
-
-          <ul className="space-y-3">
-            {todos.map((t) => (
-              <TodoItem key={t.id} todo={t} />
-            ))}
-          </ul>
         </>
       )}
     </div>

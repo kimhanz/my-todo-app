@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext, useEffect, useRef, useState } from "react"
 import { type Todo } from "../types/todos.ts"
 import * as api from "../services/api.ts"
 import toast from "react-hot-toast"
@@ -23,6 +23,8 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
+  const hasFetchedRef = useRef(false) //  ป้องกัน fetch ซ้ำ
+
   const fetchTodos = async () => {
     setLoading(true)
     setError(null)
@@ -41,7 +43,10 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   useEffect(() => {
-    fetchTodos()
+    if (!hasFetchedRef.current) {
+      hasFetchedRef.current = true
+      fetchTodos()
+    }
   }, [])
 
   const addTodo = async (title: string) => {

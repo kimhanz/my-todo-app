@@ -3,7 +3,7 @@ import { TodoList } from "./components/TodoList.tsx"
 import { TodoProvider } from "./context/TodoContext.tsx"
 import { TodoForm } from "./components/TodoForm.tsx"
 import { useTodos } from "./hooks/useTodos.ts"
-import toast, { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 
 const AddArea: React.FC = () => {
   const { addTodo } = useTodos()

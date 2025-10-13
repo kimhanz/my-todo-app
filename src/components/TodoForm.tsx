@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
-  onSubmit: (title: string) => Promise<void>
-  initial?: string
-  submitLabel?: string
-  onCancel?: () => void
-}
+  onSubmit: (title: string) => Promise<void>;
+  initial?: string;
+  submitLabel?: string;
+  onCancel?: () => void;
+};
 
 export const TodoForm: React.FC<Props> = ({
   onSubmit,
@@ -13,25 +14,28 @@ export const TodoForm: React.FC<Props> = ({
   submitLabel = "Add",
   onCancel,
 }) => {
-  const [title, setTitle] = useState(initial)
-  const [submitting, setSubmitting] = useState(false)
+  const [title, setTitle] = useState(initial);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    setTitle(initial)
-  }, [initial])
+    setTitle(initial);
+  }, [initial]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!title.trim()) return
-    setSubmitting(true)
+    e.preventDefault();
+    if (!title.trim()) return;
+    setSubmitting(true);
     try {
-      await onSubmit(title.trim())
-      setTitle("")
-      if (onCancel) onCancel()
+      await onSubmit(title.trim());
+      setTitle("");
+      if (onCancel) onCancel();
+    } catch (err: any) {
+      const msg = err?.message ?? "Failed to submit todo";
+      toast.error(msg);
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 items-center w-full">
@@ -55,5 +59,5 @@ export const TodoForm: React.FC<Props> = ({
         </button>
       )}
     </form>
-  )
-}
+  );
+};

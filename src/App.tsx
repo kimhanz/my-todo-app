@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { TodoList } from "./components/TodoList.tsx"
-import { TodoProvider } from "./context/TodoContext.tsx"
-import { TodoForm } from "./components/TodoForm.tsx"
-import { useTodos } from "./hooks/useTodos.ts"
-import { Toaster } from "react-hot-toast"
+import React, { useState } from "react";
+import { TodoList } from "./components/TodoList.tsx";
+import { TodoProvider } from "./context/TodoContext.tsx";
+import { TodoForm } from "./components/TodoForm.tsx";
+import { useTodos } from "./hooks/useTodos.ts";
+import { Toaster } from "react-hot-toast";
 
 const AddArea: React.FC = () => {
-  const { addTodo } = useTodos()
-  const [show, setShow] = useState(true)
+  const { addTodo } = useTodos();
+  const [show, setShow] = useState(true);
 
   return (
     <div className="bg-white p-4 shadow-sm card">
@@ -23,8 +23,8 @@ const AddArea: React.FC = () => {
 
       {show && <TodoForm onSubmit={async (title) => await addTodo(title)} />}
     </div>
-  )
-}
+  );
+};
 
 const AppContent: React.FC = () => {
   return (
@@ -37,8 +37,8 @@ const AppContent: React.FC = () => {
       <div className="h-6" />
       <TodoList />
     </div>
-  )
-}
+  );
+};
 
 export const App: React.FC = () => {
   return (
@@ -46,7 +46,7 @@ export const App: React.FC = () => {
       <AppContent />
       <Toaster />
     </TodoProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

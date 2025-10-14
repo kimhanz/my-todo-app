@@ -165,6 +165,8 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
       const msg = err?.message ?? "Failed to toggle todo";
       setError(msg);
       toast.error(msg, { id: t });
+    } finally {
+      setLoading(false);
     }
   };
 

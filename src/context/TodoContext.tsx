@@ -3,6 +3,8 @@ import { type Todo } from "../types/todos.ts";
 import * as api from "../services/api.ts";
 import toast from "react-hot-toast";
 
+type FilterType = "all" | "active" | "completed";
+
 type TodoContextType = {
   todos: Todo[];
   loading: boolean;
@@ -12,6 +14,8 @@ type TodoContextType = {
   updateTodo: (id: number, updates: Partial<Todo>) => Promise<void>;
   deleteTodo: (id: number) => Promise<void>;
   toggleTodo: (id: number) => Promise<void>;
+  filter: FilterType;
+  setFilter: (filter: FilterType) => void;
 };
 
 export const TodoContext = createContext<TodoContextType | undefined>(
@@ -24,6 +28,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState<FilterType>("all");
 
   const hasFetchedRef = useRef(false); //  ป้องกัน fetch ซ้ำ
 
@@ -179,6 +184,8 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({
     updateTodo,
     deleteTodo,
     toggleTodo,
+    filter,
+    setFilter,
   };
 
   return (

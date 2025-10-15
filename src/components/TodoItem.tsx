@@ -1,22 +1,22 @@
-import { useState } from "react"
-import { useTodos } from "../hooks/useTodos.ts"
-import { type Todo } from "../types/todos.ts"
-import { TodoForm } from "./TodoForm.tsx"
-import { FaRegTrashAlt } from "react-icons/fa"
-import { FaRegPenToSquare } from "react-icons/fa6"
+import { useState } from "react";
+import { useTodos } from "../hooks/useTodos.ts";
+import { type Todo } from "../types/todos.ts";
+import { TodoForm } from "./TodoForm.tsx";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegPenToSquare } from "react-icons/fa6";
 
 type Props = {
-  todo: Todo
-}
+  todo: Todo;
+};
 
 export const TodoItem: React.FC<Props> = ({ todo }) => {
-  const { deleteTodo, toggleTodo, updateTodo } = useTodos()
-  const [editing, setEditing] = useState(false)
+  const { deleteTodo, toggleTodo, updateTodo } = useTodos();
+  const [editing, setEditing] = useState(false);
 
   const handleEdit = async (title: string) => {
-    await updateTodo(todo.id, { title })
-    setEditing(false)
-  }
+    await updateTodo(todo.id, { title });
+    setEditing(false);
+  };
 
   return (
     <li className="bg-white p-5 shadow-sm flex items-start justify-between gap-3 rounded-2xl ">
@@ -53,6 +53,7 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
 
       {!editing && (
         <div className="flex items-center gap-2">
+          {/* Edit Button */}
           <button
             className="btn-ghost"
             onClick={() => setEditing(true)}
@@ -63,13 +64,15 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
               size={23}
             />
           </button>
+
+          {/* Delete Button */}
           <button
             className="btn-ghost"
             onClick={() => {
               const modal = document.getElementById(
                 "my_modal_1"
-              ) as HTMLDialogElement | null
-              modal?.showModal()
+              ) as HTMLDialogElement | null;
+              modal?.showModal();
             }}
             aria-label="Delete"
           >
@@ -78,6 +81,8 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
               size={23}
             />
           </button>
+
+          {/* Delete Dialog */}
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
               <h3 className="font-bold text-lg text-red-600">Delete Todo</h3>
@@ -105,5 +110,5 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
         </div>
       )}
     </li>
-  )
-}
+  );
+};

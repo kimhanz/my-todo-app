@@ -1,15 +1,16 @@
-import { useTodos } from "../hooks/useTodos.ts"
-import { Loader } from "./Loader.tsx"
-import { TodoItem } from "./TodoItem.tsx"
+import { useTodos } from "../hooks/useTodos.ts";
+import { Loader } from "./Loader.tsx";
+import { TodoItem } from "./TodoItem.tsx";
 
 export const TodoList: React.FC = () => {
-  const { todos, loading, error, fetchTodos } = useTodos()
+  const { todos, loading, error, fetchTodos } = useTodos();
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Todos</h2>
         <div className="flex items-center gap-2">
+          {/* Refresh Button */}
           <button
             className="btn btn-info text-white mr-4"
             onClick={fetchTodos}
@@ -45,5 +46,5 @@ export const TodoList: React.FC = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
